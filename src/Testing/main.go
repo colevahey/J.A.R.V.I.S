@@ -13,8 +13,18 @@ import (
 // Received holds received json data from wolfram
 type Received struct {
 	QueryResult struct {
-		Pods []struct {
-			Subpods []struct {
+		Success   bool
+		Numpods   int
+		Datatypes string
+		Pods      []struct {
+			Title      string
+			Numsubpods int
+			Subpods    []struct {
+				Title string
+				Img   struct {
+					Src string
+					Alt string
+				}
 				Plaintext string
 			}
 		}
@@ -54,7 +64,11 @@ func welcome() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	//fmt.Println(data.QueryResult.Pods[0].Subpods[0].Plaintext)
+	if data.QueryResult.Success {
+		if data.QueryResult.Numpods > 0 {
+			fmt.Println(data.QueryResult.Pods[1])
+		}
+	}
 }
 
 func main() {
