@@ -13,7 +13,9 @@ import (
 // Received holds received json data from wolfram
 type Received struct {
 	QueryResult struct {
-		Pods []struct {
+		Success bool
+		Numpods int
+		Pods    []struct {
 			Subpods []struct {
 				Plaintext string
 			}
@@ -54,7 +56,11 @@ func welcome() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(data.QueryResult.Pods[0].Subpods[0].Plaintext)
+	if data.QueryResult.Success == true && data.QueryResult.Numpods > 0 {
+		fmt.Println(data.QueryResult.Pods[0].Subpods[0].Plaintext)
+	} else {
+		fmt.Println("Query is too complicated for JARVIS V1")
+	}
 }
 
 func main() {
