@@ -2,12 +2,23 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
 )
+
+type Received struct {
+	QueryResult struct {
+		Pods []struct {
+			Subpods []struct {
+				Plaintext string
+			}
+		}
+	}
+}
 
 func input() (text string) {
 	text = ""
@@ -35,6 +46,13 @@ func welcome() {
 	if err != nil {
 		fmt.Println(err)
 	}
+	//fmt.Println(string(contents))
+	data := Received{}
+	err = json.Unmarshal(contents, &data)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(data.QueryResult.Pods[0].Subpods[0].Plaintext)
 }
 
 func main() {
