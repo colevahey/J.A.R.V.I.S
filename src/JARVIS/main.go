@@ -21,12 +21,12 @@ type Received struct {
 			Numsubpods int
 			ID         string
 			Subpods    []struct {
-				Title string
-				Img   struct {
+				Title     string
+				Plaintext string
+				Img       struct {
 					Src string
 					Alt string
 				}
-				Plaintext string
 			}
 		}
 	}
