@@ -68,14 +68,19 @@ func welcome() {
 		if data.QueryResult.Numpods > 0 {
 			for _, pod := range data.QueryResult.Pods {
 				fmt.Println(pod.Title + " (" + pod.ID + "):")
-				if pod.Subpods[0].Plaintext != "" {
-					if pod.ID == "Result" {
+				if strings.Contains(pod.Title, "Result") {
+					if pod.Subpods[0].Plaintext != "" {
 						fmt.Println("Main result:", pod.Subpods[0].Plaintext, "\n")
 					} else {
-						fmt.Println(pod.Subpods[0].Plaintext, "\n")
+						fmt.Println("Main result is not plaintext.")
+						fmt.Println("Results:", pod.Subpods[0])
 					}
 				} else {
-					fmt.Println("Result is more complicated than just plain text\n")
+					if pod.Subpods[0].Plaintext != "" {
+						fmt.Println(pod.Subpods[0].Plaintext, "\n")
+					} else {
+						fmt.Println(pod.ID, "has not plaintext result")
+					}
 				}
 			}
 		} else {
